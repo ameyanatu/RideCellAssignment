@@ -21,7 +21,7 @@ Framework -
 How to Run This Framework ?
 
 1. git clone this repository
-2. cd RideCellAssignment
+2. cd RideCellAssignment/venv
 3. pipenv install
 4. Go to cd venv then pipenv install
 5. Go to cd venv/Framework
