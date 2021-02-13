@@ -1,10 +1,10 @@
 import requests
-import json
 import utilities.customLogger as cl
 import logging
 
 
-class DjangoAPI():
+class DjangoAPI:
+
     log = cl.customLogger(logging.DEBUG)
 
     def __init__(self):

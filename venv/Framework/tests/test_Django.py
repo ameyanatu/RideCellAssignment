@@ -1,5 +1,4 @@
 import pytest
-from selenium import webdriver
 import utilities.customLogger as cl
 from utilities.readConfigFile import ReadConfig
 from POM.Django_github_page import DjangoPage

@@ -6,7 +6,8 @@ import utilities.customLogger as cl
 import logging
 
 
-class DjangoPage():
+class DjangoPage:
+
     log = cl.customLogger(logging.DEBUG)
     repo_link_xpath = "//*[@class='UnderlineNav-item selected']"
     repo_list_xpath = "//*[@class = 'org-repos repo-list']/ul/li"
@@ -31,8 +32,7 @@ class DjangoPage():
             Web_Data_Json = dict()
             for repo in repo_list:
                 repo_name = repo.find_element_by_xpath(self.individual_repo_name_xpath).text
-                # Description is optional while creating github repository.
-                # therefore checking whether repo have description or not
+                # Description is optional therefore checking description element is present or not.
                 if len(repo.find_elements_by_xpath(self.individual_repo_description_xpath)) > 0:
                     Web_Data_Json[repo_name] = repo.find_element_by_xpath(self.individual_repo_description_xpath).text
                 else:

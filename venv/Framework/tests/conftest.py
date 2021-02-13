@@ -15,16 +15,16 @@ def setup(browser):
     return driver
 
 
-def pytest_addoption(parser):  # This will get the value from CLI /hooks
+def pytest_addoption(parser):
     parser.addoption("--browser")
 
 
 @pytest.fixture()
-def browser(request):  # This will return the Browser value to setup method
+def browser(request):
     return request.config.getoption("--browser")
 
 
-# It is hook for Adding Environment info to HTML Report
+
 def pytest_configure(config):
     config._metadata['Project Name'] = 'RideCell Assignment'
     config._metadata['Module Name'] = 'Django GitHub'
