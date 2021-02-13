@@ -15,18 +15,22 @@ class Test_DjangoData:
 
     def test_Django_Data(self, setup):
         self.log.info("Testing Django Data Validation****")
+
+        # Web Data Extraction
         self.driver = setup
         self.log.info("Opening URL")
         self.driver.get(self.DjangoURL)
-        self.driver.maximize_window()
         self.DP = DjangoPage(self.driver)
         self.DP.clickOnRepo()
         self.log.info("Getting Repository Data From Github Web page")
         WebJSONData = self.DP.getRepositoryData()
         self.driver.close()
+
+        # API Data Extraction
         self.DA = DjangoAPI()
         self.log.info("Getting Repository Data From Github GET API Endpoint")
         APIJSONData = self.DA.getRepositoryDataAPI(self.DjangoAPIEndPoint)
+
         self.log.info("Asserting Actual Data with Expected Data")
         assert WebJSONData == APIJSONData
 

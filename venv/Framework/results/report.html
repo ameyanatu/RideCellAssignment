@@ -24,68 +24,70 @@ function find(selector, elem) { // eslint-disable-line no-redeclare
     return elem.querySelector(selector);
 }
 
-function findAll(selector, elem) {
+function find_all(selector, elem) {
     if (!elem) {
         elem = document;
     }
     return toArray(elem.querySelectorAll(selector));
 }
 
-function sortColumn(elem) {
-    toggleSortStates(elem);
+function sort_column(elem) {
+    toggle_sort_states(elem);
     const colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
     let key;
-    if (elem.classList.contains('result')) {
-        key = keyResult;
+    if (elem.classList.contains('numeric')) {
+        key = key_num;
+    } else if (elem.classList.contains('result')) {
+        key = key_result;
     } else if (elem.classList.contains('links')) {
-        key = keyLink;
+        key = key_link;
     } else {
-        key = keyAlpha;
+        key = key_alpha;
     }
-    sortTable(elem, key(colIndex));
+    sort_table(elem, key(colIndex));
 }
 
-function showAllExtras() { // eslint-disable-line no-unused-vars
-    findAll('.col-result').forEach(showExtras);
+function show_all_extras() { // eslint-disable-line no-unused-vars
+    find_all('.col-result').forEach(show_extras);
 }
 
-function hideAllExtras() { // eslint-disable-line no-unused-vars
-    findAll('.col-result').forEach(hideExtras);
+function hide_all_extras() { // eslint-disable-line no-unused-vars
+    find_all('.col-result').forEach(hide_extras);
 }
 
-function showExtras(colresultElem) {
-    const extras = colresultElem.parentNode.nextElementSibling;
-    const expandcollapse = colresultElem.firstElementChild;
+function show_extras(colresult_elem) {
+    const extras = colresult_elem.parentNode.nextElementSibling;
+    const expandcollapse = colresult_elem.firstElementChild;
     extras.classList.remove('collapsed');
     expandcollapse.classList.remove('expander');
     expandcollapse.classList.add('collapser');
 }
 
-function hideExtras(colresultElem) {
-    const extras = colresultElem.parentNode.nextElementSibling;
-    const expandcollapse = colresultElem.firstElementChild;
+function hide_extras(colresult_elem) {
+    const extras = colresult_elem.parentNode.nextElementSibling;
+    const expandcollapse = colresult_elem.firstElementChild;
     extras.classList.add('collapsed');
     expandcollapse.classList.remove('collapser');
     expandcollapse.classList.add('expander');
 }
 
-function showFilters() {
-    const filterItems = document.getElementsByClassName('filter');
-    for (let i = 0; i < filterItems.length; i++)
-        filterItems[i].hidden = false;
+function show_filters() {
+    const filter_items = document.getElementsByClassName('filter');
+    for (let i = 0; i < filter_items.length; i++)
+        filter_items[i].hidden = false;
 }
 
-function addCollapse() {
+function add_collapse() {
     // Add links for show/hide all
     const resulttable = find('table#results-table');
     const showhideall = document.createElement('p');
-    showhideall.innerHTML = '<a href="javascript:showAllExtras()">Show all details</a> / ' +
-                            '<a href="javascript:hideAllExtras()">Hide all details</a>';
+    showhideall.innerHTML = '<a href="javascript:show_all_extras()">Show all details</a> / ' +
+                            '<a href="javascript:hide_all_extras()">Hide all details</a>';
     resulttable.parentElement.insertBefore(showhideall, resulttable);
 
     // Add show/hide link to each result
-    findAll('.col-result').forEach(function(elem) {
-        const collapsed = getQueryParameter('collapsed') || 'Passed';
+    find_all('.col-result').forEach(function(elem) {
+        const collapsed = get_query_parameter('collapsed') || 'Passed';
         const extras = elem.parentNode.nextElementSibling;
         const expandcollapse = document.createElement('span');
         if (extras.classList.contains('collapsed')) {
@@ -100,40 +102,40 @@ function addCollapse() {
 
         elem.addEventListener('click', function(event) {
             if (event.currentTarget.parentNode.nextElementSibling.classList.contains('collapsed')) {
-                showExtras(event.currentTarget);
+                show_extras(event.currentTarget);
             } else {
-                hideExtras(event.currentTarget);
+                hide_extras(event.currentTarget);
             }
         });
     });
 }
 
-function getQueryParameter(name) {
+function get_query_parameter(name) {
     const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
 function init () { // eslint-disable-line no-unused-vars
-    resetSortHeaders();
+    reset_sort_headers();
 
-    addCollapse();
+    add_collapse();
 
-    showFilters();
+    show_filters();
 
-    sortColumn(find('.initial-sort'));
+    sort_column(find('.initial-sort'));
 
-    findAll('.sortable').forEach(function(elem) {
+    find_all('.sortable').forEach(function(elem) {
         elem.addEventListener('click',
             function() {
-                sortColumn(elem);
+                sort_column(elem);
             }, false);
     });
 }
 
-function sortTable(clicked, keyFunc) {
-    const rows = findAll('.results-table-row');
+function sort_table(clicked, key_func) {
+    const rows = find_all('.results-table-row');
     const reversed = !clicked.classList.contains('asc');
-    const sortedRows = sort(rows, keyFunc, reversed);
+    const sorted_rows = sort(rows, key_func, reversed);
     /* Whole table is removed here because browsers acts much slower
      * when appending existing elements.
      */
@@ -142,62 +144,68 @@ function sortTable(clicked, keyFunc) {
     const parent = document.createElement('table');
     parent.id = 'results-table';
     parent.appendChild(thead);
-    sortedRows.forEach(function(elem) {
+    sorted_rows.forEach(function(elem) {
         parent.appendChild(elem);
     });
     document.getElementsByTagName('BODY')[0].appendChild(parent);
 }
 
-function sort(items, keyFunc, reversed) {
-    const sortArray = items.map(function(item, i) {
-        return [keyFunc(item), i];
+function sort(items, key_func, reversed) {
+    const sort_array = items.map(function(item, i) {
+        return [key_func(item), i];
     });
 
-    sortArray.sort(function(a, b) {
-        const keyA = a[0];
-        const keyB = b[0];
+    sort_array.sort(function(a, b) {
+        const key_a = a[0];
+        const key_b = b[0];
 
-        if (keyA == keyB) return 0;
+        if (key_a == key_b) return 0;
 
         if (reversed) {
-            return keyA < keyB ? 1 : -1;
+            return key_a < key_b ? 1 : -1;
         } else {
-            return keyA > keyB ? 1 : -1;
+            return key_a > key_b ? 1 : -1;
         }
     });
 
-    return sortArray.map(function(item) {
+    return sort_array.map(function(item) {
         const index = item[1];
         return items[index];
     });
 }
 
-function keyAlpha(colIndex) {
+function key_alpha(col_index) {
     return function(elem) {
-        return elem.childNodes[1].childNodes[colIndex].firstChild.data.toLowerCase();
+        return elem.childNodes[1].childNodes[col_index].firstChild.data.toLowerCase();
     };
 }
 
-function keyLink(colIndex) {
+function key_num(col_index) {
     return function(elem) {
-        const dataCell = elem.childNodes[1].childNodes[colIndex].firstChild;
+        return parseFloat(elem.childNodes[1].childNodes[col_index].firstChild.data);
+    };
+}
+
+function key_link(col_index) {
+    return function(elem) {
+        const dataCell = elem.childNodes[1].childNodes[col_index].firstChild;
         return dataCell == null ? '' : dataCell.innerText.toLowerCase();
     };
 }
 
-function keyResult(colIndex) {
+function key_result(col_index) {
     return function(elem) {
         const strings = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed',
             'Skipped', 'Passed'];
-        return strings.indexOf(elem.childNodes[1].childNodes[colIndex].firstChild.data);
+        return strings.indexOf(elem.childNodes[1].childNodes[col_index].firstChild.data);
     };
 }
 
-function resetSortHeaders() {
-    findAll('.sort-icon').forEach(function(elem) {
+function reset_sort_headers() {
+    find_all('.sort-icon').forEach(function(elem) {
         elem.parentNode.removeChild(elem);
     });
-    findAll('.sortable').forEach(function(elem) {
+    find_all('.sortable').forEach(function(elem) {
         const icon = document.createElement('div');
         icon.className = 'sort-icon';
         icon.textContent = 'vvv';
@@ -207,7 +215,7 @@ function resetSortHeaders() {
     });
 }
 
-function toggleSortStates(elem) {
+function toggle_sort_states(elem) {
     //if active, toggle between asc and desc
     if (elem.classList.contains('active')) {
         elem.classList.toggle('asc');
@@ -216,34 +224,34 @@ function toggleSortStates(elem) {
 
     //if inactive, reset all other functions and add ascending active
     if (elem.classList.contains('inactive')) {
-        resetSortHeaders();
+        reset_sort_headers();
         elem.classList.remove('inactive');
         elem.classList.add('active');
     }
 }
 
-function isAllRowsHidden(value) {
+function is_all_rows_hidden(value) {
     return value.hidden == false;
 }
 
-function filterTable(elem) { // eslint-disable-line no-unused-vars
-    const outcomeAtt = 'data-test-result';
-    const outcome = elem.getAttribute(outcomeAtt);
-    const classOutcome = outcome + ' results-table-row';
-    const outcomeRows = document.getElementsByClassName(classOutcome);
+function filter_table(elem) { // eslint-disable-line no-unused-vars
+    const outcome_att = 'data-test-result';
+    const outcome = elem.getAttribute(outcome_att);
+    const class_outcome = outcome + ' results-table-row';
+    const outcome_rows = document.getElementsByClassName(class_outcome);
 
-    for(let i = 0; i < outcomeRows.length; i++){
-        outcomeRows[i].hidden = !elem.checked;
+    for(let i = 0; i < outcome_rows.length; i++){
+        outcome_rows[i].hidden = !elem.checked;
     }
 
-    const rows = findAll('.results-table-row').filter(isAllRowsHidden);
-    const allRowsHidden = rows.length == 0 ? true : false;
-    const notFoundMessage = document.getElementById('not-found-message');
-    notFoundMessage.hidden = !allRowsHidden;
+    const rows = find_all('.results-table-row').filter(is_all_rows_hidden);
+    const all_rows_hidden = rows.length == 0 ? true : false;
+    const not_found_message = document.getElementById('not-found-message');
+    not_found_message.hidden = !all_rows_hidden;
 }
 </script>
     <h1>report.html</h1>
-    <p>Report generated on 13-Feb-2021 at 16:01:43 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <p>Report generated on 13-Feb-2021 at 18:49:02 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.0.0</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -251,13 +259,13 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Django GitHub</td></tr>
       <tr>
         <td>Packages</td>
-        <td>{"pluggy": "0.13.1", "py": "1.10.0", "pytest": "6.2.2"}</td></tr>
+        <td>{"pluggy": "0.13.1", "py": "1.9.0", "pytest": "6.1.2"}</td></tr>
       <tr>
         <td>Platform</td>
         <td>macOS-10.16-x86_64-i386-64bit</td></tr>
       <tr>
         <td>Plugins</td>
-        <td>{"forked": "1.3.0", "html": "3.1.1", "metadata": "1.11.0", "xdist": "2.2.1"}</td></tr>
+        <td>{"html": "3.0.0", "hypothesis": "5.41.1", "metadata": "1.10.0", "schemathesis": "2.7.1", "subtests": "0.3.2"}</td></tr>
       <tr>
         <td>Project Name</td>
         <td>RideCell Assignment</td></tr>
@@ -268,15 +276,15 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Tester</td>
         <td>Ameya Natu</td></tr></table>
     <h2>Summary</h2>
-    <p>1 tests ran in 5.52 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">1 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>1 tests ran in 7.16 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="passed">1 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
         <tr>
           <th class="sortable result initial-sort" col="result">Result</th>
           <th class="sortable" col="name">Test</th>
-          <th class="sortable" col="duration">Duration</th>
+          <th class="sortable numeric" col="duration">Duration</th>
           <th class="sortable links" col="links">Links</th></tr>
         <tr hidden="true" id="not-found-message">
           <th colspan="4">No results found. Try to check the filters</th></tr></thead>
@@ -284,15 +292,14 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_Django.py::Test_DjangoData::test_Django_Data</td>
-          <td class="col-duration">5.36</td>
+          <td class="col-duration">7.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>{&#x27;django&#x27;: &#x27;The Web framework for perfectionists with deadlines.&#x27;, &#x27;django-localflavor&#x27;: &#x27;Country-specific Django helpers, formerly of contrib fame&#x27;, &#x27;asgiref&#x27;: &#x27;ASGI specification and utilities&#x27;, &#x27;deps&#x27;: &#x27;Django Enhancement Proposals&#x27;, &#x27;channels_redis&#x27;: &#x27;Redis channel layer backend for Django Channels&#x27;, &#x27;channels&#x27;: &#x27;Developer-friendly asynchrony for Django&#x27;, &#x27;code-of-conduct&#x27;: &#x27;Internal documentation of the DSF Code of Conduct committee&#x27;, &#x27;daphne&#x27;: &#x27;Django Channels HTTP/WebSocket server&#x27;, &#x27;djangosnippets.org&#x27;: &#x27;The code that powers djangosnippets.org, it allows users to post and share useful &quot;snippets&quot; of code.&#x27;, &#x27;django-contrib-comments&#x27;: None, &#x27;djangoproject.com&#x27;: &#x27;Source code to djangoproject.com&#x27;, &#x27;django-fuzzers&#x27;: None, &#x27;django-docker-box&#x27;: &#x27;Run the Django test suite across all supported databases and python versions&#x27;, &#x27;django-docs-translations&#x27;: &#x27;Translations of the Django documentation. Questions and discussions happen on https://groups.google.com/forum/#!forum/django-i18n&#x27;, &#x27;code.djangoproject.com&#x27;: &quot;Configuration for Django&#x27;s Trac instance (code.djangoproject.com)&quot;, &#x27;djangobench&#x27;: &quot;Harness and benchmarks for evaluating Django&#x27;s performance over time&quot;, &#x27;djangopeople&#x27;: &#x27;A geographical community site for Django developers&#x27;, &#x27;asgi_ipc&#x27;: &#x27;IPC-based ASGI channel layer&#x27;, &#x27;ticketbot&#x27;: &quot;Django&#x27;s IRC ticketbot. Linkifies tickets and changesets. Hangs out in #django and #django-dev.&quot;, &#x27;django-box&#x27;: &#x27;VM to run the Django test suite. ARCHIVED Please use https://github.com/django/django-docker-box&#x27;}
-{&#x27;asgiref&#x27;: &#x27;ASGI specification and utilities&#x27;, &#x27;asgi_ipc&#x27;: &#x27;IPC-based ASGI channel layer&#x27;, &#x27;channels&#x27;: &#x27;Developer-friendly asynchrony for Django&#x27;, &#x27;channels_redis&#x27;: &#x27;Redis channel layer backend for Django Channels&#x27;, &#x27;code-of-conduct&#x27;: &#x27;Internal documentation of the DSF Code of Conduct committee&#x27;, &#x27;code.djangoproject.com&#x27;: &quot;Configuration for Django&#x27;s Trac instance (code.djangoproject.com)&quot;, &#x27;daphne&#x27;: &#x27;Django Channels HTTP/WebSocket server&#x27;, &#x27;deps&#x27;: &#x27;Django Enhancement Proposals&#x27;, &#x27;django&#x27;: &#x27;The Web framework for perfectionists with deadlines.&#x27;, &#x27;django-box&#x27;: &#x27;VM to run the Django test suite. ARCHIVED Please use https://github.com/django/django-docker-box&#x27;, &#x27;django-contrib-comments&#x27;: None, &#x27;django-docker-box&#x27;: &#x27;Run the Django test suite across all supported databases and python versions&#x27;, &#x27;django-docs-translations&#x27;: &#x27;Translations of the Django documentation. Questions and discussions happen on https://groups.google.com/forum/#!forum/django-i18n&#x27;, &#x27;django-fuzzers&#x27;: None, &#x27;django-localflavor&#x27;: &#x27;Country-specific Django helpers, formerly of contrib fame&#x27;, &#x27;djangobench&#x27;: &quot;Harness and benchmarks for evaluating Django&#x27;s performance over time&quot;, &#x27;djangopeople&#x27;: &#x27;A geographical community site for Django developers&#x27;, &#x27;djangoproject.com&#x27;: &#x27;Source code to djangoproject.com&#x27;, &#x27;djangosnippets.org&#x27;: &#x27;The code that powers djangosnippets.org, it allows users to post and share useful &quot;snippets&quot; of code.&#x27;, &#x27;ticketbot&#x27;: &quot;Django&#x27;s IRC ticketbot. Linkifies tickets and changesets. Hangs out in #django and #django-dev.&quot;}
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     Test_DjangoData:test_Django.py:17 Testing Django Data Validation****
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>INFO     Test_DjangoData:test_Django.py:17 Testing Django Data Validation****
 INFO     Test_DjangoData:test_Django.py:19 Opening URL
-INFO     DjangoPage:Django_github_page.py:19 Django Repository Link is Clicked
+INFO     DjangoPage:Django_github_page.py:22 Django Repository Link is Clicked
 INFO     Test_DjangoData:test_Django.py:24 Getting Repository Data From Github Web page
 INFO     DjangoAPI:Django_github_API.py:11 Django API Class initiated
-INFO     Test_DjangoData:test_Django.py:28 Getting Repository Data From Github GET API Endpoint<br/></div></td></tr></tbody></table></body></html>
+INFO     Test_DjangoData:test_Django.py:28 Getting Repository Data From Github GET API Endpoint
+INFO     Test_DjangoData:test_Django.py:30 Asserting Actual Data with Expected Data<br/></div></td></tr></tbody></table></body></html>
