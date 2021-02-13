@@ -1,5 +1,11 @@
 # RideCellAssignment
- 
+
+Framework Structure
+
+
+
+
+
 How to Run This Framework ?
 
 1. git clone this repository
