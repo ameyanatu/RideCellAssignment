@@ -1,0 +1,18 @@
+02/13/2021 03:49:17 PM - Test_DjangoData - INFO: Testing Django Data Validation****
+02/13/2021 03:49:17 PM - Test_DjangoData - INFO: Opening URL
+02/13/2021 03:49:19 PM - DjangoPage - INFO: Django Repository Link is Clicked
+02/13/2021 03:49:19 PM - Test_DjangoData - INFO: Getting Repository Data From Github Web page
+02/13/2021 03:49:20 PM - DjangoAPI - INFO: Django API Class initiated
+02/13/2021 03:49:20 PM - Test_DjangoData - INFO: Getting Repository Data From Github GET API Endpoint
+02/13/2021 03:50:44 PM - Test_DjangoData - INFO: Testing Django Data Validation****
+02/13/2021 03:50:44 PM - Test_DjangoData - INFO: Opening URL
+02/13/2021 03:50:46 PM - DjangoPage - INFO: Django Repository Link is Clicked
+02/13/2021 03:50:46 PM - Test_DjangoData - INFO: Getting Repository Data From Github Web page
+02/13/2021 03:50:47 PM - DjangoAPI - INFO: Django API Class initiated
+02/13/2021 03:50:47 PM - Test_DjangoData - INFO: Getting Repository Data From Github GET API Endpoint
+02/13/2021 04:01:40 PM - Test_DjangoData - INFO: Testing Django Data Validation****
+02/13/2021 04:01:40 PM - Test_DjangoData - INFO: Opening URL
+02/13/2021 04:01:42 PM - DjangoPage - INFO: Django Repository Link is Clicked
+02/13/2021 04:01:42 PM - Test_DjangoData - INFO: Getting Repository Data From Github Web page
+02/13/2021 04:01:43 PM - DjangoAPI - INFO: Django API Class initiated
+02/13/2021 04:01:43 PM - Test_DjangoData - INFO: Getting Repository Data From Github GET API Endpoint

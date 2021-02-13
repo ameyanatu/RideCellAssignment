@@ -1,0 +1,3 @@
+{"DjangoGitHubPageURL":"https://github.com/django",
+  "DjangoGithubGETEndpoint":"https://api.github.com/users/django/repos"
+}
