@@ -5,6 +5,7 @@ from selenium import webdriver
 @pytest.fixture()
 def setup(browser):
     driver = ""
+    # Driver's executables are placed in bin folder
     if browser == 'chrome':
         driver = webdriver.Chrome()
         driver.maximize_window()
