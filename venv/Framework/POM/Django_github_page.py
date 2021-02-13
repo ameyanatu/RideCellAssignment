@@ -1,5 +1,3 @@
-from selenium import webdriver
-import json
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
 import utilities.customLogger as cl

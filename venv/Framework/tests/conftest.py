@@ -1,5 +1,4 @@
 import pytest
-import os
 from selenium import webdriver
 
 
@@ -22,7 +21,6 @@ def pytest_addoption(parser):
 @pytest.fixture()
 def browser(request):
     return request.config.getoption("--browser")
-
 
 
 def pytest_configure(config):
