@@ -2,8 +2,14 @@
 
 Framework Structure
 
+Framework -
 
-
+  - Configuration_files
+  - Logs
+  - POM
+  - results
+  - tests
+  - utilities
 
 
 How to Run This Framework ?
