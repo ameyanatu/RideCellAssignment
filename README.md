@@ -1,5 +1,10 @@
 # RideCellAssignment
 
+This is a Test Automation project that compares names and description of all repositories in django project from UI with respect to API. This framework is designed on following environment:
+
+1. Mac OS Big Sur
+2. PyCharm IDE : Community Version 2020.2
+
 ## Technology Stack:
 
 1. Python 3.9
@@ -24,6 +29,13 @@ Framework -
   
   -- utilities
   
+
+## System Requirements:
+
+Please install Python 3.9 version if not installed.
+
+https://www.python.org/downloads/release/python-390/
+
 
 ## How to Run This Framework ?
 
