@@ -1,5 +1,13 @@
 # RideCellAssignment
 
+Technology Stack:
+
+1. Python 3.9
+2. Selenium Library 3.141.0
+3. requests Library 2.25.1
+4. pytest 6.2.2
+5. pytest-html 3.1.1
+
 Framework Structure
 
 Framework -
