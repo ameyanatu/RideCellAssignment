@@ -42,6 +42,6 @@ https://www.python.org/downloads/release/python-390/
 2. cd RideCellAssignment/venv
 3. pipenv install
 4. Go to cd venv then pipenv install
-5. Please download Chromedriver and Geckodriver binaries as per OS and place it in bin folder of the venv.
+5. Then please download Chromedriver and Geckodriver binaries as per OS and place it in bin folder of the venv. Currently this framework supports two browser chrome and firefox which you can mention in the argument option in step 7.
 6. Go to cd venv/Framework
 7. Then run pytest -v --html=results/report.html tests/test_Django.py --browser chrome
