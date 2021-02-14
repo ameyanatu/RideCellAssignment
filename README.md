@@ -8,7 +8,7 @@ Technology Stack:
 4. pytest 6.2.2
 5. pytest-html 3.1.1
 
-Framework Structure
+Framework Structure:
 
 Framework -
 
@@ -24,7 +24,6 @@ Framework -
   
   -- utilities
   
-
 
 How to Run This Framework ?
 
