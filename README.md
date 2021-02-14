@@ -36,12 +36,12 @@ Please install Python 3.9 version if not installed.
 
 https://www.python.org/downloads/release/python-390/
 
-
 ## How to Run This Framework ?
 
 1. git clone this repository
 2. cd RideCellAssignment/venv
 3. pipenv install
 4. Go to cd venv then pipenv install
-5. Go to cd venv/Framework
-6. Then run pytest -v --html=results/report.html tests/test_Django.py --browser chrome
+5. Please download Chromedriver and Geckodriver binaries as per OS and place it in bin folder of the venv.
+6. Go to cd venv/Framework
+7. Then run pytest -v --html=results/report.html tests/test_Django.py --browser chrome
